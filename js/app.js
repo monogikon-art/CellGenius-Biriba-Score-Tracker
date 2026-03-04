@@ -291,7 +291,7 @@ const App = {
 
         board.className = 'scoreboard' + (players.length === 3 ? ' three-players' : '');
         board.innerHTML = players.map((name, i) => `
-            <div class="score-card ${scores[i] === maxScore && scores[i] > 0 ? 'leading' : ''}">
+            <div class="score-card team-color-${i} ${scores[i] === maxScore && scores[i] > 0 ? 'leading' : ''}">
                 <div class="team-name">${this.escapeHtml(name)}</div>
                 <div class="team-score ${scores[i] < 0 ? 'negative' : ''}">${this.formatNumber(scores[i])}</div>
             </div>
@@ -381,7 +381,7 @@ const App = {
 
         container.innerHTML = this.currentGame.players.map((name, pIdx) => {
             return `
-                <div class="round-team-section" data-player-index="${pIdx}">
+                <div class="round-team-section team-color-${pIdx}" data-player-index="${pIdx}">
                     <h4>${this.escapeHtml(name)}</h4>
 
                     <div class="score-input-group">
@@ -583,6 +583,19 @@ const App = {
                     </div>
                 `).join('')}
             </div>
+            <div class="extend-game-section">
+                <p style="color: var(--text-secondary); margin-bottom: 12px; font-size: 0.9rem;">Want to keep playing?</p>
+                <div class="extend-options">
+                    <button class="btn btn-secondary" onclick="App.extendGame(1000)">+1000</button>
+                    <button class="btn btn-secondary" onclick="App.extendGame(2000)">+2000</button>
+                    <button class="btn btn-secondary" onclick="App.extendGame(3000)">+3000</button>
+                    <button class="btn btn-secondary" onclick="App.extendGame(5000)">+5000</button>
+                    <div style="display:flex;align-items:center;gap:6px;">
+                        <input type="number" id="custom-extend" class="form-input" placeholder="Custom" min="500" step="100" style="width:100px;padding:6px 10px;">
+                        <button class="btn btn-primary btn-sm" onclick="App.extendGameCustom()">Extend</button>
+                    </div>
+                </div>
+            </div>
             <div class="gameover-actions">
                 <button class="btn btn-primary btn-lg" onclick="App.newGameFromOver()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -621,6 +634,28 @@ const App = {
         this.showScreen('screen-game');
         this.renderGame();
         this.showToast('Rematch started!', 'success');
+    },
+
+    extendGame(extraPoints) {
+        if (!this.currentGame) return;
+        this.currentGame.targetScore += extraPoints;
+        this.currentGame.completed = false;
+        delete this.currentGame.winner;
+        delete this.currentGame.winnerScore;
+        StorageManager.saveCurrentGame(this.currentGame);
+        this.showScreen('screen-game');
+        this.renderGame();
+        this.showToast(`Game extended! New target: ${this.formatNumber(this.currentGame.targetScore)}`, 'success');
+    },
+
+    extendGameCustom() {
+        const input = document.getElementById('custom-extend');
+        const val = parseInt(input.value);
+        if (!val || val < 100) {
+            this.showToast('Enter a valid number (min 100)', 'error');
+            return;
+        }
+        this.extendGame(val);
     },
 
     endGame() {

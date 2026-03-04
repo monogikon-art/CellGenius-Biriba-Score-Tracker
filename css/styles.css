@@ -586,12 +586,12 @@ body {
 }
 
 .score-card .team-name {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-secondary);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 .score-card .team-score {
@@ -843,11 +843,79 @@ body {
 }
 
 .round-team-section h4 {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     font-weight: 700;
     margin-bottom: 16px;
     padding-bottom: 8px;
     border-bottom: 1px solid var(--border-color);
+}
+
+/* Team color backgrounds for round scoring */
+.round-team-section.team-color-0 {
+    background: rgba(79, 140, 255, 0.08);
+    border-color: rgba(79, 140, 255, 0.25);
+}
+
+.round-team-section.team-color-0 h4 {
+    color: #6ea8ff;
+}
+
+.round-team-section.team-color-1 {
+    background: rgba(251, 146, 60, 0.08);
+    border-color: rgba(251, 146, 60, 0.25);
+}
+
+.round-team-section.team-color-1 h4 {
+    color: #fb923c;
+}
+
+.round-team-section.team-color-2 {
+    background: rgba(167, 139, 250, 0.08);
+    border-color: rgba(167, 139, 250, 0.25);
+}
+
+.round-team-section.team-color-2 h4 {
+    color: #a78bfa;
+}
+
+[data-theme="light"] .round-team-section.team-color-0 {
+    background: rgba(37, 99, 235, 0.06);
+    border-color: rgba(37, 99, 235, 0.2);
+}
+
+[data-theme="light"] .round-team-section.team-color-0 h4 {
+    color: #2563eb;
+}
+
+[data-theme="light"] .round-team-section.team-color-1 {
+    background: rgba(234, 88, 12, 0.06);
+    border-color: rgba(234, 88, 12, 0.2);
+}
+
+[data-theme="light"] .round-team-section.team-color-1 h4 {
+    color: #ea580c;
+}
+
+[data-theme="light"] .round-team-section.team-color-2 {
+    background: rgba(124, 58, 237, 0.06);
+    border-color: rgba(124, 58, 237, 0.2);
+}
+
+[data-theme="light"] .round-team-section.team-color-2 h4 {
+    color: #7c3aed;
+}
+
+/* Team color accents on scoreboard cards */
+.score-card.team-color-0 {
+    border-left: 4px solid rgba(79, 140, 255, 0.6);
+}
+
+.score-card.team-color-1 {
+    border-left: 4px solid rgba(251, 146, 60, 0.6);
+}
+
+.score-card.team-color-2 {
+    border-left: 4px solid rgba(167, 139, 250, 0.6);
 }
 
 .score-input-group {
@@ -1086,6 +1154,23 @@ body {
 .gameover-actions {
     display: flex;
     gap: 12px;
+    justify-content: center;
+}
+
+/* Extend Game */
+.extend-game-section {
+    margin-bottom: 28px;
+    padding: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+}
+
+.extend-options {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
 }
 
